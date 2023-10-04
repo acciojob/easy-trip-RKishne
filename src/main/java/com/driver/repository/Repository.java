@@ -35,7 +35,7 @@ public class Repository {
     }
 
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
-        double ans=0;
+        double ans=Integer.MIN_VALUE;
         for(Flight flight:fligthDb.values()){
             if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)){
                 if(ans>flight.getDuration()){
@@ -53,8 +53,10 @@ public class Repository {
         int count=0;
         for(Flight flight:fligthDb.values()){
             if(flight.getFlightDate()==date){
-                if(airportDb.get(airportName).equals(airportName)){
-                    count++;
+                for(Airport airport:airportDb.values()){
+                    if(airport.getAirportName().equals(airportName)){
+                        count++;
+                    }
                 }
             }
         }
@@ -99,11 +101,7 @@ public class Repository {
     }
 
     public String addFlight(Flight flight) {
-        for(Flight flight1:fligthDb.values()){
-            if(flight1.getFlightId()==flight.getFlightId()){
-                return "flight already present!!";
-            }
-        }
+
         fligthDb.put(flight.getFlightId(),flight);
         return "SUCCESS";
     }
@@ -130,7 +128,7 @@ public class Repository {
 
     public int calculateFlightFare(Integer flightId) {
         int count=0;
-        int fare=0;
+        int fare=3000;
         for(Integer Id:flightPassengerDb.keySet()){
             if(Id==flightId){
                 count++;
