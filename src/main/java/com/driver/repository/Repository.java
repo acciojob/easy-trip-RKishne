@@ -48,7 +48,7 @@ public class Repository {
         List<Flight> ans=new ArrayList<>();
         for(Flight flight:fligthDb.values()) {
             if (flight.getFlightDate() == date && flight.getFromCity().equals(airportName)) {
-                ans.add(flight)
+                ans.add(flight);
             }
         }
 
