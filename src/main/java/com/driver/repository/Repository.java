@@ -66,7 +66,7 @@ public class Repository {
     public String bookATicket(Integer flightId, Integer passengerId) {
 
 
-        if(fligthDb.get(flightId).getMaxCapacity()==flightPassengerDb.size()){
+        if(fligthDb.get(flightId).getMaxCapacity()<flightPassengerDb.size()){
             return "FAILURE";
         }
         for(Integer passId:flightPassengerDb.values()){
@@ -128,11 +128,14 @@ public class Repository {
 
     public int calculateFlightFare(Integer flightId) {
         int count=0;
-        int fare=3000;
+        int fare;
         for(Integer Id:flightPassengerDb.keySet()){
             if(Id==flightId){
                 count++;
             }
+        }
+        if(count==0){
+            return 3000;
         }
         if(count==3){
             fare= 3000+2*50;
