@@ -48,7 +48,8 @@ public class Repository {
         for(Integer flightid:flightPassengerDb.keySet()){
             for(Flight flight:fligthDb.values()){
                 Airport airport=airportDb.get(airportName);
-                if((flightid == flight.getFlightId()) && (flight.getFlightDate() == date)){
+                if((flightid == flight.getFlightId()) && (flight.getFlightDate().equals(date)) &&
+                airport.getCity().equals(flight.getFromCity())){
                     ans++;
                 }
             }
