@@ -7,6 +7,7 @@ import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,19 @@ public class Service {
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName) {
-        return repository.getNumberOfPeopleOn(date, airportName);
+        int count = 0;
+        Airport airport = repository.getNumberOfPeopleOn(date,airportName);
+        if (airport == null)
+            return count;
+
+        List<Flight> list = repository.getAllFlights();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (Flight flight : list)
+            if (fmt.format(flight.getFlightDate()).equals(fmt.format(date)) && (flight.getFromCity() == airport.getCity() || flight.getToCity() == airport.getCity()))
+                count += repository.getPassengersByFlight(flight.getFlightId()).size();
+
+        return count;
 
     }
 

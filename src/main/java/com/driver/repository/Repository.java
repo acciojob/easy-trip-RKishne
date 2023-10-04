@@ -15,6 +15,7 @@ public class Repository {
     Map<Integer, Passenger> passengerDb=new HashMap<>();
 
     Map<Integer, Integer> flightPassengerDb=new HashMap<>();
+    HashMap<Integer, List<Integer>> passengerFlightDb = new HashMap<>();
     public void addAirport(Airport airport) {
         airportDb.put(airport.getAirportName(),airport);
     }
@@ -43,20 +44,8 @@ public class Repository {
         return listOfFlight;
     }
 
-    public int  getNumberOfPeopleOn(Date date, String airportName) {
-        int ans = 0;
-        for (Flight flight : fligthDb.values()) {
-            if (flight.getFlightDate().equals(date)) { // Use .equals() for proper date comparison
-                Airport airport = airportDb.get(airportName);
-                if (airport != null && airport.getCity().equals(flight.getFromCity())) {
-                    ans++;
-                }
-            }
-        }
-        if(ans==0){
-            return ans+2;
-        }
-        return ans;
+    public Airport  getNumberOfPeopleOn(Date date, String airportName) {
+        return airportDb.get(airportName);
     }
 
     public String bookATicket(Integer flightId, Integer passengerId) {
@@ -143,7 +132,9 @@ public class Repository {
         }
         return fare;
     }
-
+    public List<Flight> getAllFlights() {
+        return new ArrayList<>(fligthDb.values());
+    }
     public int calculateRevenueOfAFlight(Integer flightId) {
         int fare=0;
         for(Integer flightid :flightPassengerDb.keySet()){
@@ -152,5 +143,17 @@ public class Repository {
             }
         }
         return fare;
+    }
+
+    public Map<Integer,List<Integer>> getPassengersByFlight(int flightId) {
+        Map<Integer,List<Integer>> ans=new HashMap<>();
+        for(Map.Entry<Integer,Integer>entry:flightPassengerDb.entrySet()){
+            Integer key=entry.getKey();
+            Integer value=entry.getValue();
+            if(key==flightId){
+                ans.put(key,new ArrayList<>(value));
+            }
+        }
+        return ans;
     }
 }
