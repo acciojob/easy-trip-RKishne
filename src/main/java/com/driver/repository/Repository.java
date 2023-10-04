@@ -44,12 +44,11 @@ public class Repository {
     }
 
     public int  getNumberOfPeopleOn(Date date, String airportName) {
-        int ans=0;
-        for(Integer flightid:flightPassengerDb.keySet()){
-            for(Flight flight:fligthDb.values()){
-                Airport airport=airportDb.get(airportName);
-                if((flightid == flight.getFlightId()) && (flight.getFlightDate().equals(date)) &&
-                airport.getCity().equals(flight.getFromCity())){
+        int ans = 0;
+        for (Flight flight : fligthDb.values()) {
+            if (flight.getFlightDate().equals(date)) { // Use .equals() for proper date comparison
+                Airport airport = airportDb.get(airportName);
+                if (airport != null && airport.getCity().equals(flight.getFromCity())) {
                     ans++;
                 }
             }
