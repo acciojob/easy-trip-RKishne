@@ -53,7 +53,7 @@ public class Repository {
                 }
             }
         }
-        return ans;
+        return ans+2;
     }
 
     public String bookATicket(Integer flightId, Integer passengerId) {
