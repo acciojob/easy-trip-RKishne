@@ -11,8 +11,8 @@ import java.util.Date;
 
 @org.springframework.stereotype.Service
 public class Service {
-    @Autowired
-    Repository repository;
+
+    Repository repository=new Repository();
 
     public void addAirport(Airport airport) {
         repository.addAirport(airport);

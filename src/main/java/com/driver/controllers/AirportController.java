@@ -13,8 +13,8 @@ import java.util.Date;
 
 @RestController
 public class AirportController {
-    @Autowired
-    Service service;
+
+    Service service=new Service();
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 
