@@ -43,14 +43,17 @@ public class Repository {
         return listOfFlight;
     }
 
-    public List<Flight> getNumberOfPeopleOn(Date date, String airportName) {
-
-        List<Flight> ans=new ArrayList<>();
+    public int  getNumberOfPeopleOn(Date date, String airportName) {
+        int ans=0;
         for(Flight flight:fligthDb.values()) {
             if (flight.getFlightDate() == date ) {
                 for(Airport airport:airportDb.values()){
-                    if(flight.getFromCity().equals(airport.getCity())){
-                        ans.add(flight);
+                    if(airport.getAirportName().equals(airportName)){
+                        for(Integer flightid:flightPassengerDb.keySet()){
+                            if(flight.getFlightId()==flightid){
+                                ans++;
+                            }
+                        }
                     }
                 }
             }
