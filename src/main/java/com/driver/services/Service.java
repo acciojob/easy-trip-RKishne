@@ -41,7 +41,11 @@ public class Service {
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName) {
-        return repository.getNumberOfPeopleOn(date,airportName);
+        List<Flight> flightlist= repository.getNumberOfPeopleOn(date,airportName);
+
+        int count=flightlist.size();
+
+        return count;
 
     }
 

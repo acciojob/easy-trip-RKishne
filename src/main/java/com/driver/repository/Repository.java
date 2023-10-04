@@ -43,26 +43,20 @@ public class Repository {
         return listOfFlight;
     }
 
-    public int getNumberOfPeopleOn(Date date, String airportName) {
-        int count=0;
+    public List<Flight> getNumberOfPeopleOn(Date date, String airportName) {
+
         List<Flight> ans=new ArrayList<>();
-        for(Flight flight:fligthDb.values()){
-            if(flight.getFlightDate()==date){
-                for(Airport airport:airportDb.values()){
-                    if(airport.getAirportName().equals(airportName)){
+        for(Flight flight:fligthDb.values()) {
+            if (flight.getFlightDate() == date) {
+                for (Airport airport : airportDb.values()) {
+                    if (airport.getAirportName().equals(airportName)) {
                         ans.add(flight);
                     }
                 }
             }
         }
-        for(Flight flight:ans){
-            for(Integer flightid:flightPassengerDb.keySet()){
-                if(flightid==flight.getFlightId()){
-                    count++;
-                }
-            }
-        }
-        return count;
+
+        return ans;
     }
 
     public String bookATicket(Integer flightId, Integer passengerId) {
@@ -151,7 +145,12 @@ public class Repository {
     }
 
     public int calculateRevenueOfAFlight(Integer flightId) {
-        int fare=calculateFlightFare(flightId);
+        int fare=0;
+        for(Integer flightid :flightPassengerDb.keySet()){
+            if(flightId==flightid){
+                fare+=3000;
+            }
+        }
         return fare;
     }
 }
