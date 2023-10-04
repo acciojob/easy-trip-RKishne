@@ -6,9 +6,7 @@ import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import io.swagger.models.auth.In;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @org.springframework.stereotype.Repository
 public class Repository {
@@ -34,29 +32,33 @@ public class Repository {
         return ans;
     }
 
-    public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
-        double ans=0;
+    public List<Flight> getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
+        List<Flight> listOfFlight=new ArrayList<>();
         for(Flight flight:fligthDb.values()){
             if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)){
-                if(ans>Math.abs(flight.getDuration())){
-                    ans=Math.abs(flight.getDuration());
-                }
+                listOfFlight.add(flight);
             }
         }
-        if(ans==0){
-            return -1;
-        }
-        return ans;
+
+        return listOfFlight;
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName) {
         int count=0;
+        List<Flight> ans=new ArrayList<>();
         for(Flight flight:fligthDb.values()){
             if(flight.getFlightDate()==date){
                 for(Airport airport:airportDb.values()){
                     if(airport.getAirportName().equals(airportName)){
-                        count++;
+                        ans.add(flight);
                     }
+                }
+            }
+        }
+        for(Flight flight:ans){
+            for(Integer flightid:flightPassengerDb.keySet()){
+                if(flightid==flight.getFlightId()){
+                    count++;
                 }
             }
         }
@@ -69,8 +71,10 @@ public class Repository {
         if(fligthDb.get(flightId).getMaxCapacity()<flightPassengerDb.size()){
             return "FAILURE";
         }
-        for(Integer passId:flightPassengerDb.values()){
-            if(passId==passengerId){
+        for(Map.Entry<Integer,Integer> entry:flightPassengerDb.entrySet()){
+            Integer key= entry.getKey();
+            Integer passId=entry.getValue();
+            if( flightId == key && passId == passengerId){
                 return "FAILURE";
             }
         }

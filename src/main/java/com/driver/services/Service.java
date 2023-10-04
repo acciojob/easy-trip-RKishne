@@ -8,6 +8,7 @@ import com.driver.model.Passenger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -23,11 +24,25 @@ public class Service {
     }
 
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
-        return repository.getShortestDurationOfPossibleBetweenTwoCities(fromCity,toCity);
+        List<Flight> listOfFlight =repository.getShortestDurationOfPossibleBetweenTwoCities(fromCity,toCity);
+
+        if (!listOfFlight.isEmpty()) {
+            // Find the shortest duration among the direct flights
+            double shortestDuration = listOfFlight.stream()
+                    .mapToDouble(Flight::getDuration)
+                    .min()
+                    .orElse(0); // Default value if no flights found, replace with an appropriate default value
+
+            return shortestDuration;
+        } else {
+            // No direct flights found
+            return -1;
+        }
     }
 
     public int getNumberOfPeopleOn(Date date, String airportName) {
         return repository.getNumberOfPeopleOn(date,airportName);
+
     }
 
     public String bookATicket(Integer flightId, Integer passengerId) {
