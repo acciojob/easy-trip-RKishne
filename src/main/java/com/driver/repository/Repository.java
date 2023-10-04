@@ -1,4 +1,4 @@
-package com.driver.controllers;
+package com.driver.repository;
 
 import com.driver.model.Airport;
 import com.driver.model.City;
@@ -13,7 +13,6 @@ import java.util.Map;
 @org.springframework.stereotype.Repository
 public class Repository {
     Map<String,Airport> airportDb=new HashMap<>();
-//    Map<String,City> cityDb=new HashMap<>();
     Map<Integer, Flight> fligthDb=new HashMap<>();
     Map<Integer, Passenger> passengerDb=new HashMap<>();
 
