@@ -35,11 +35,11 @@ public class Repository {
     }
 
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
-        double ans=Integer.MIN_VALUE;
+        double ans=0;
         for(Flight flight:fligthDb.values()){
             if(flight.getFromCity().equals(fromCity) && flight.getToCity().equals(toCity)){
-                if(ans>flight.getDuration()){
-                    ans=flight.getDuration();
+                if(ans>Math.abs(flight.getDuration())){
+                    ans=Math.abs(flight.getDuration());
                 }
             }
         }
